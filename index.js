@@ -3,7 +3,7 @@ const cors = require('cors');
 const app = express();
 
 var corsOpt = {
-    origin: "http://localhost:5050"
+    origin: "http://localhost:3031"
 };
 
 app.use(cors(corsOpt));
@@ -17,7 +17,7 @@ app.get('/', (req, res) => {
 require('./app/routes/activity.routes')(app);
 require('./app/routes/todo.routes')(app);
 
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 3030;
 app.listen(PORT, () => {
     console.log(`Server running on port : ${PORT}`);
 });
