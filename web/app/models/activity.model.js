@@ -11,7 +11,7 @@ const Activity = function(activity) {
 
 Activity.create = (newActivity, result) => {
     sql.query(
-        "INSERT INTO activities SET ?", newActivity, (err, res) => {
+        "INSERT INTO activites SET ?", newActivity, (err, res) => {
             if(err) {
                 console.log("error" +err);
                 result(err, null);
@@ -23,7 +23,7 @@ Activity.create = (newActivity, result) => {
 };
 
 Activity.findById = (id, result) => {
-    sql.query(`SELECT * FROM activities WHERE id = ${id}`, (err, res) => {
+    sql.query(`SELECT * FROM activites WHERE id = ${id}`, (err, res) => {
         if (err) {
             console.log("error: ", err);
             result(err, null);
@@ -40,7 +40,7 @@ Activity.findById = (id, result) => {
 };
   
 Activity.getAll = (result) => {
-    let query = "SELECT * FROM activities";
+    let query = "SELECT * FROM activites";
   
     sql.query(query, (err, res) => {
         if (err) {
@@ -55,7 +55,7 @@ Activity.getAll = (result) => {
   
 Activity.updateById = (id, activity, result) => {
     sql.query(
-        "UPDATE activities SET email = ?, title = ? WHERE id = ?",
+        "UPDATE activites SET email = ?, title = ? WHERE id = ?",
         [activity.email, activity.title, id],
         (err, res) => {
             if (err) {
@@ -75,7 +75,7 @@ Activity.updateById = (id, activity, result) => {
 };
   
 Activity.remove = (id, result) => {
-    sql.query("DELETE FROM activities WHERE id = ?", id, (err, res) => {
+    sql.query("DELETE FROM activites WHERE id = ?", id, (err, res) => {
         if (err) {
             console.log("error: ", err);
             result(null, err);
