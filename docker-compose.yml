@@ -2,26 +2,30 @@ version: '3.8'
 
 services:
     mysql:
-        image: mysql:latest
-        command: --default-authentication-plugin=mysql_native_password
-        restart: unless-stopped
+        # image: mysql:latest
+        # command: --default-authentication-plugin=mysql_native_password
+        build: ./db
         env_file: ./.env
+        tty: true
         environment:
             - MYSQL_ROOT_PASSWORD=secret
             - MYSQL_DATABASE=$MYSQLDB_DATABASE
         ports:
-            - 33060:3306
-        volumes:
-            - mysql:/var/lib/mysql
+            - "3306:3306"
+        restart: always
+        # volumes:
+        #     - mysql:/var/lib/mysql
+        #     - ./initdb.sql:/docker-entrypoint-initdb.d/initdb.sql
+            
     web:
-        depends_on:
-            - mysql
-        build: ./web
-            # dockerfile: Dockerfile
-        restart: unless-stopped
+        build:
+            context: ./web
+            dockerfile: Dockerfile
         env_file: ./.env
         ports:
-            - $NODE_LOCAL_PORT:$NODE_DOCKER_PORT
+            - "3030:3030"
+        links:
+            - mysql
         environment:
             - DB_HOST=mysql
             - DB_USER=$MYSQLDB_USER
@@ -29,7 +33,10 @@ services:
             - DB_NAME=$MYSQLDB_DATABASE
             - DB_PORT=$MYSQLDB_DOCKER_PORT
         stdin_open: true
-        tty: true
+        depends_on:
+            - mysql
+        restart: on-failure
 
-volumes: 
-    mysql:
+# volumes: 
+#     mysql:
+#         driver: local

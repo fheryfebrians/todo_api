@@ -1,3 +1,5 @@
+-- CREATE USER 'root'@'%' IDENTIFIED BY 'password'; GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' WITH GRANT OPTION;
+
 CREATE TABLE IF NOT EXISTS `activites` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `email` varchar(255) DEFAULT NULL,
@@ -27,5 +29,5 @@ CREATE TABLE IF NOT EXISTS `todo` (
 INSERT INTO `todo` (`id`, `activity_group_id`, `title`, `is_active`, `priority`, `created_at`, `updated_at`, `deleted_at`) VALUES 
 (1, '1', 'TEST', 'true', 'very-high', NULL, NULL, NULL);
 
-ALTER USER 'root' IDENTIFIED WITH mysql_native_password BY 'password'; 
+ALTER USER 'root' IDENTIFIED WITH mysql_native_password BY 'secret'; 
 flush privileges;
